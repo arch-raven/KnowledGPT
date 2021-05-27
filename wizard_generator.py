@@ -189,8 +189,7 @@ def fix_missing_period(line):
     return line + " ."
 
 
-def data_generator(in_file, correct_first=False, keep_last_n=99999):
-
+def data_generator(in_file, correct_first=False, keep_last_n=99999, use_samples=-1):
     examples = load_data(in_file)
     observation = None
 
@@ -199,7 +198,7 @@ def data_generator(in_file, correct_first=False, keep_last_n=99999):
 
     reset_on_next_update = False
 
-    for i, ex in enumerate(examples):
+    for i, ex in enumerate(examples[:use_samples]):
         if i % 1000 == 0:
             print("Processing {} of {}; {:0.2f} percent done".format(
                 i, len(examples), float(i) * 100.0 / float(len(examples))))

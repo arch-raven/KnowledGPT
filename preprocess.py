@@ -10,6 +10,7 @@ if __name__ == '__main__':
 
     parser.add_argument('--in_file', type=str, default='')
     parser.add_argument('--out_file', type=str, default='')
+    parser.add_argument('--use_samples', type=int, default=-1)
     args = parser.parse_args()
 
     # in_file = "/home/zhaoxl/Data/wizard_of_wikipedia/test_random_split.json"
@@ -20,7 +21,7 @@ if __name__ == '__main__':
         os.makedirs(out_dir)
 
     with open(args.out_file, 'w', encoding='utf-8') as f:
-        for history, user, response, knowledge in data_generator(args.in_file, correct_first=True, keep_last_n=2):
+        for history, user, response, knowledge in data_generator(args.in_file, correct_first=True, keep_last_n=2, use_samples=args.use_samples):
             f.write(
                 json.dumps({
                     'history': history,
