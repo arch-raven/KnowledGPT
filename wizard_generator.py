@@ -99,12 +99,14 @@ def len_episode(d):
     return len(d['dialog']) // 2
 
 
-def load_data(data_path):
+def load_data(data_path, use_samples):
     # 1. load from source file
     print('loading: {}'.format(data_path))
     with open(data_path, 'r', encoding='utf-8') as f:
         data = json.load(f)
-
+    if use_samples>0:
+        data = data[:use_samples]
+    
     # 2. split into multiple turns
     examples = []
     for episode_idx, d in enumerate(data):
@@ -190,7 +192,7 @@ def fix_missing_period(line):
 
 
 def data_generator(in_file, correct_first=False, keep_last_n=99999, use_samples=-1):
-    examples = load_data(in_file)
+    examples = load_data(in_file, use_samples)
     observation = None
 
     history_strings = []
@@ -198,7 +200,7 @@ def data_generator(in_file, correct_first=False, keep_last_n=99999, use_samples=
 
     reset_on_next_update = False
 
-    for i, ex in enumerate(examples[:use_samples]):
+    for i, ex in enumerate(examples):
         if i % 1000 == 0:
             print("Processing {} of {}; {:0.2f} percent done".format(
                 i, len(examples), float(i) * 100.0 / float(len(examples))))

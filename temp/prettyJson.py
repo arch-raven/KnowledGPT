@@ -8,16 +8,16 @@ if __name__ == '__main__':
         data = json.load(f)
 
     with open("data/raw.json", 'w', encoding='utf-8') as f:
-        for conv_ex in data[:5]:
+        for conv_ex in data[:1]:
             json.dump(conv_ex, f, indent=4) 
             f.write(3*'\n')
    
     data = []
-    with open("data/test_seen.jsonl", 'r', encoding='utf-8') as f:
+    with open("test_seen.jsonl", 'r', encoding='utf-8') as f:
         for line in f.readlines():
             data.append(json.loads(line))
 
     with open("data/preprocessed.jsonl", 'w', encoding='utf-8') as f:
-        for conv_ex in data[:5]:
+        for conv_ex in data:
             json.dump(conv_ex, f, indent=4) 
             f.write(3*'\n')
